@@ -1,3 +1,14 @@
+loco();
+
+window.onload = function (){
+  document.getElementById('container').style.display="block";
+  init();
+  document.getElementById('preloader').style.display="none";
+};
+
+
+
+
 let crsr = document.querySelector("#cursor");
 let blur = document.querySelector("#cursor-blur");
 document.addEventListener("mousemove",function (dets){
@@ -10,51 +21,83 @@ document.addEventListener("mousemove",function (dets){
 
 
 
+
 function loco(){
   gsap.registerPlugin(ScrollTrigger);
 
-const locoScroll = new LocomotiveScroll({
-  el: document.querySelector("#main"),
-  smooth: true,
+  const locoScroll = new LocomotiveScroll({
+    el: document.querySelector("#main"),
+    smooth: true ,
+  });
+  locoScroll.on("scroll", ScrollTrigger.update);
 
-  // for tablet smooth
-  tablet: { smooth: true },
+  ScrollTrigger.scrollerProxy("#main", {
+    scrollTop(value) {
+      return arguments.length
+        ? locoScroll.scrollTo(value, 0, 0)
+        : locoScroll.scroll.instance.scroll.y;
+    },
 
-  // for mobile
-  smartphone: { smooth: true }
-});
-locoScroll.on("scroll", ScrollTrigger.update);
+    getBoundingClientRect() {
+      return {
+        top: 0,
+        left: 0,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+    },
 
-ScrollTrigger.scrollerProxy("#main", {
-  scrollTop(value) {
-    return arguments.length
-      ? locoScroll.scrollTo(value, 0, 0)
-      : locoScroll.scroll.instance.scroll.y;
-  },
-  getBoundingClientRect() {
-    return {
-      top: 0,
-      left: 0,
-      width: window.innerWidth,
-      height: window.innerHeight
-    };
-  }
-
-  // follwoing line is not required to work pinning on touch screen
-
-  /* pinType: document.querySelector("#main").style.transform
-    ? "transform"
-    : "fixed"*/
-});
-
-ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-
-ScrollTrigger.refresh();
-
+    pinType: document.querySelector("#main").style.transform
+      ? "transform"
+      : "fixed",
+  });
+  ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+  ScrollTrigger.refresh();
 }
 
-    
-loco();
+// function loco1(){
+//   gsap.registerPlugin(ScrollTrigger);
+
+// const locoScroll = new LocomotiveScroll({
+//   el: document.querySelector("#main"),
+//   smooth: true,
+
+//   // for tablet smooth
+//   tablet: { smooth: true },
+
+//   // for mobile
+//   smartphone: { smooth: true }
+// });
+// locoScroll.on("scroll", ScrollTrigger.update);
+
+// ScrollTrigger.scrollerProxy("#main", {
+//   scrollTop(value) {
+//     return arguments.length
+//       ? locoScroll.scrollTo(value, 0, 0)
+//       : locoScroll.scroll.instance.scroll.y;
+//   },
+//   getBoundingClientRect() {
+//     return {
+//       top: 0,
+//       left: 0,
+//       width: window.innerWidth,
+//       height: window.innerHeight
+//     };
+//   }
+
+//   // follwoing line is not required to work pinning on touch screen
+
+//   /* pinType: document.querySelector("#main").style.transform
+//     ? "transform"
+//     : "fixed"*/
+// });
+
+// ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+// ScrollTrigger.refresh();
+
+// }
+
 
 function init(){
   const canvas = document.querySelector("canvas");
@@ -406,14 +449,12 @@ function init(){
       end: `600% top`,
       scroller: `#main`,
     },
-    onUpdate: () => {console.log(imageSeq.frame);
-    render()},
+    onUpdate:render
   });
 
   images[1].onload = render;
 
   function render() {
-    // console.log(imageSeq.frame);
     scaleImage(images[imageSeq.frame], context);
   }
 
@@ -446,7 +487,7 @@ function init(){
     end: `600% top`,
   });
 }
-init();
+
 
 gsap.to("#page1",{
     scrollTrigger:{
@@ -482,11 +523,11 @@ gsap.to("#page3",{
 });
 let tl1 = gsap.timeline();
 tl1.to("#page>#loop>h1",{
-  x:"-100%",
+  x:"-80%",
+  repeat:-1,
   duration:400,
   ease:'ease',
-  stagger:-1,
-  yoyo:true
+  // yoyo:true
   // stagger:-1
 });
 // console.log(window.innerWidth);
