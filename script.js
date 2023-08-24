@@ -10,7 +10,7 @@ document.addEventListener("mousemove",function (dets){
 
 
 
-function loco1(){
+function loco(){
   gsap.registerPlugin(ScrollTrigger);
 
 const locoScroll = new LocomotiveScroll({
