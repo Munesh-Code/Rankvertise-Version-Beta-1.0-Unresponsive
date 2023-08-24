@@ -29,17 +29,16 @@ html,body{
     overflow: hidden;
 }
 
-#cursor{
+/* #cursor{
     height: 15px;
     width: 15px;
     border-radius: 50%;
     position: fixed;
     z-index: 29;
     background-color: #000000fe;
-    /* transition:all 0.05s ease; */
-}
+} */
 
-#cursor-blur{
+/* #cursor-blur{
     height: 100px;
     width: 100px;
     border-radius: 50%;
@@ -47,8 +46,7 @@ html,body{
     z-index: 28;
     background-color: rgb(0, 0, 0);
     filter:blur(80px);
-    /* transition:all 0.15s ease; */
-}
+} */
 
 #page{
     position: relative;
